@@ -1,9 +1,10 @@
 import React from "react";
+import Body from "./components/Body";
 
 const App = () => {
   return (
     <div>
-      <h1>Hello world</h1>
+      <Body />
     </div>
   );
 };
