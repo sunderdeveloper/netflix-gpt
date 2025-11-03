@@ -6,12 +6,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+
+import background from "../assets/background.jpg";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
 
   const username = useRef(null);
   const email = useRef(null);
@@ -37,8 +37,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
+          // console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -54,7 +53,6 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = "Invalid Credentials";
@@ -73,7 +71,7 @@ const Login = () => {
       <Header />
       <div>
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/9ba9f0e2-b246-47f4-bd1f-3e84c23a5db8/web/IN-en-20251020-TRIFECTA-perspective_d6da84e9-6145-4b1e-bb51-e402c966a045_large.jpg"
+          src={background}
           alt=""
           className="h-screen w-full object-cover object-center"
         />
