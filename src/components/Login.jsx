@@ -67,7 +67,7 @@ const Login = () => {
   };
   return (
     <div>
-      <div className="w-full h-screen bg-black opacity-70 fixed"></div>
+      <div className="w-full h-screen bg-black opacity-50 fixed"></div>
       <Header />
       <div>
         <img

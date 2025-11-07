@@ -37,9 +37,13 @@ const Header = () => {
   };
   return (
     <div>
-      <div className="absolute px-6 py-4 flex items-center justify-between w-full">
+      <div className="absolute px-6 py-4 flex items-center justify-between w-full z-100">
         <div>
-          <img src={Logo} alt="logo" className="md:w-42 cursor-pointer w-34" />
+          <img
+            src={Logo}
+            alt="logo"
+            className=" md:w-42 cursor-pointer w-34 "
+          />
         </div>
 
         {user && (
@@ -47,7 +51,7 @@ const Header = () => {
             <img src={userIcon} alt="" className="w-12 rounded-sm" />
             <button
               onClick={handleSignOut}
-              className="font-bold cursor-pointer"
+              className="font-bold cursor-pointer text-white"
             >
               Sign Out
             </button>
