@@ -18,7 +18,7 @@ const VideoBackground = ({ movieId, background }) => {
       ></iframe> */}
 
       <img
-        className="w-full h-screen relative object-cover object-center"
+        className="w-full h-[80vh] relative object-cover object-center md:h-screen"
         src={IMG_CDN_URL + background}
       />
     </div>

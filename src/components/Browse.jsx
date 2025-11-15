@@ -5,8 +5,11 @@ import SecondaryContainer from "./SecondaryContainer";
 import usePopularMovies from "../hooks/usePopularMovies";
 import useTopRated from "../hooks/useTopRated";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
+import GPTSearch from "./GPTSearch";
+import { useSelector } from "react-redux";
 
 const Browse = () => {
+  const showGpt = useSelector((store) => store.gpt.showGptSearch);
   useNowPlayingMovies();
   usePopularMovies();
   useTopRated();
@@ -15,8 +18,14 @@ const Browse = () => {
   return (
     <div className="bg-black">
       <Header />
-      <MainContainer />
-      <SecondaryContainer />
+      {showGpt ? (
+        <GPTSearch />
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
     </div>
   );
 };
