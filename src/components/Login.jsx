@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import { Validate } from "../utils/validate.jsx";
+import { Validate } from "../utils/Validate.jsx";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
