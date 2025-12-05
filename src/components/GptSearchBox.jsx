@@ -2,12 +2,14 @@ import React, { useRef } from "react";
 import { FiSend } from "react-icons/fi";
 import ai from "../hooks/AiConfig";
 import { API_OPTIONS } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addGptMovieResults } from "../utils/gptSlice";
 
 const GptSearchBox = () => {
   const dispatch = useDispatch();
   const searchText = useRef();
+
+  const userName = useSelector((store) => store.user);
 
   const getSuggestedMovies = async (movie) => {
     const data = await fetch(
@@ -21,8 +23,6 @@ const GptSearchBox = () => {
   };
 
   const handleGptSearchClick = async () => {
-    console.log(searchText.current.value);
-
     const searchQuery =
       "Act as a movie recommendation system and suggest some movies for the query" +
       searchText.current.value +
@@ -32,18 +32,14 @@ const GptSearchBox = () => {
       model: "gemini-2.5-flash",
       contents: searchQuery,
     });
-    console.log(gptResult.text);
 
     const getMovies = gptResult.text.split(",");
-    console.log(getMovies);
 
     const promiseArray = getMovies.map((movie) => getSuggestedMovies(movie));
 
     const gptmovieResults = await Promise.all(promiseArray);
 
     const movieResults = gptmovieResults.flat(Infinity);
-
-    console.log(movieResults);
 
     dispatch(
       addGptMovieResults({
@@ -56,10 +52,14 @@ const GptSearchBox = () => {
   };
 
   return (
-    <div className="flex items-center justify-center pt-50 pb-14 mx-4 md:pt-40 md:pb-20">
+    <div className="flex flex-col items-center justify-center pt-50 pb-14 mx-4 md:pt-40 md:pb-20">
+      <h1 className="text-red-700 mb-10 capitalize text-2xl md:text-3xl font-semibold text-center">
+        Hi {userName.displayName} let's find a great movie
+      </h1>
+
       <form
         action="#"
-        className="relative w-[800px]  flex justify-center"
+        className="relative w-full md:w-[800px]  flex justify-center"
         onSubmit={(e) => e.preventDefault()}
       >
         <input

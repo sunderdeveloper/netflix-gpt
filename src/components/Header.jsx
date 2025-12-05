@@ -63,7 +63,9 @@ const Header = () => {
                 {showGptSearch ? "Home Page" : "Search using AI"}
               </button>
             </div>
-            <img src={userIcon} alt="" className="w-8 md:w-12 rounded-sm" />
+            <h1 className="w-10 h-10 rounded-4xl bg-red-700 text-white capitalize text-2xl text-center font-semibold cursor-pointer leading-9">
+              {user.displayName?.slice(0, 1)}
+            </h1>
             <button
               onClick={handleSignOut}
               className="text-sm md:text-md font-bold cursor-pointer text-white"

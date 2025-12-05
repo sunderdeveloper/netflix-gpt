@@ -1,5 +1,8 @@
 export const Validate = (username, email, password) => {
-  if (username.trim().length > 0) {
+  if (username !== null) {
+    if (username.trim().length === 0) {
+      return "Username is required";
+    }
     const isUsernameValid = /^[a-zA-Z\s]{2,20}$/.test(username);
 
     if (!isUsernameValid) return "Username is not Valid";

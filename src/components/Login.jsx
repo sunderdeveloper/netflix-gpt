@@ -4,21 +4,27 @@ import { Validate } from "../utils/Validate.jsx";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 
 import background from "../assets/background.jpg";
 
+import { addUser } from "../utils/userSlice.js";
+import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
 
   const username = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
   const handleFormValidation = () => {
-    const usernameValue = isSignInForm ? "" : username.current.value;
+    const usernameValue = isSignInForm ? null : username.current.value;
     const message = Validate(
       usernameValue,
       email.current.value,
@@ -38,6 +44,24 @@ const Login = () => {
           // Signed up
           const user = userCredential.user;
           // console.log(user);
+          updateProfile(user, {
+            displayName: username.current.value,
+          }).then(async () => {
+            await user.reload();
+            const updatedUser = auth.currentUser;
+
+            dispatch(
+              addUser({
+                uid: updatedUser.uid,
+                email: updatedUser.email,
+                displayName: updatedUser.displayName,
+              })
+            );
+          });
+
+          Navigate("/browse").catch((error) => {
+            setErrorMessage(error.message);
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -52,8 +76,8 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
         })
+
         .catch((error) => {
           const errorCode = "Invalid Credentials";
           const errorMessage = error.message;
@@ -88,6 +112,7 @@ const Login = () => {
                 ref={username}
                 type="text"
                 placeholder="Username"
+                required
                 className="bg-gray-700 p-3 rounded-sm placeholder-gray-400 text-white"
               />
             )}
@@ -95,12 +120,14 @@ const Login = () => {
               ref={email}
               type="text"
               placeholder="Email Address"
+              required
               className="bg-gray-700 p-3 rounded-sm placeholder-gray-400 text-white"
             />
             <input
               ref={password}
               type="password"
               placeholder="Password"
+              required
               className="bg-gray-700 p-3 rounded-sm placeholder-gray-400 text-white"
             />
             <p className="text-red-600 font-semibold">{errorMessage}</p>

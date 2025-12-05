@@ -4,9 +4,9 @@ import { MdOutlineInfo } from "react-icons/md";
 
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="absolute text-white pt-[50%] sm:pt-[30%] md:pt-[15%] pl-10 z-20 ">
+    <div className="absolute text-white pt-[50%] sm:pt-[30%] pl-6 md:pt-[15%] md:pl-10 z-20 ">
       <h1 className="text-3xl md:text-6xl font-bold">{title}</h1>
-      <p className="text-sm md:font-md w-[80%] md:w-[550px] mt-4">{overview}</p>
+      <p className="text-md md:font-md w-[90%] md:w-[550px] mt-4">{overview}</p>
       <div className="flex gap-5 mt-6">
         <button className="bg-[#ffffff] flex items-center gap-1 md:gap-2 px-4 py-1 md:px-6  md:py-2 rounded-sm text-black text-sm">
           <FaPlay /> Play
