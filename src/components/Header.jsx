@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { CiSearch } from "react-icons/ci";
 import { toggleGptSearch } from "../utils/gptSlice";
+import { HiOutlineSparkles } from "react-icons/hi2";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -54,12 +55,15 @@ const Header = () => {
         </div>
 
         {user && (
-          <div className="flex items-center gap-2">
-            <div className="bg-white  p-1 rounded-4xl mr-6 ">
+          <div className="flex items-center gap-4">
+            <div className="bg-gradient-to-r from-[#00FCD0] via-[#209AD9] to-[#9C3DA9] py-2 px-2 rounded-4xl ">
               <button
-                className="text-sm md:text-md text-gray-900 flex items-center gap-1 md:gap-2 py-1  px-4 md:px-6 border-1 border-gray-600 rounded-2xl cursor-pointer"
+                className="bg-gray-300 py-2 px-6 rounded-4xl text-gray-600 flex items-center gap-2 text-md font-semibold cursor-pointer"
                 onClick={handleShowGpt}
               >
+                <span>
+                  <HiOutlineSparkles />
+                </span>
                 {showGptSearch ? "Home Page" : "Search using AI"}
               </button>
             </div>

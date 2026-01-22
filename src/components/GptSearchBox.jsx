@@ -4,17 +4,24 @@ import ai from "../hooks/AiConfig";
 import { API_OPTIONS } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addGptMovieResults } from "../utils/gptSlice";
+import { setLoading } from "../utils/moviesSlice";
 
 const GptSearchBox = () => {
   const dispatch = useDispatch();
   const searchText = useRef();
+  // const inputValue = searchText.current.value.trim();
 
   const userName = useSelector((store) => store.user);
 
+  // if (!inputValue) {
+  //   console.log("please enter a value");
+  // }
+
   const getSuggestedMovies = async (movie) => {
+    dispatch(setLoading(true));
     const data = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
-      API_OPTIONS
+      API_OPTIONS,
     );
 
     const json = await data.json();
@@ -45,8 +52,9 @@ const GptSearchBox = () => {
       addGptMovieResults({
         MovieNames: getMovies,
         MoviesResult: movieResults,
-      })
+      }),
     );
+    dispatch(setLoading(false));
 
     searchText.current.value = "";
   };
@@ -76,6 +84,21 @@ const GptSearchBox = () => {
           <FiSend />{" "}
         </button>
       </form>
+      <div className="mt-10 text-white flex items-start justify-center gap-4 flex-wrap md:flex-nowrap">
+        <h3 className="text-lg">Related Searches: </h3>
+        <div className="flex items-center flex-wrap justify-center">
+          <span className="bg-[#90909067] px-5 py-2 rounded-3xl cursor-pointer mx-3 md:my-0 my-3">
+            Hindi Horror <b className="ml-2 text-red-500 text-lg">&times;</b>
+          </span>
+          <span className="bg-[#90909067] px-5 py-2 rounded-3xl cursor-pointer mx-3 md:my-0 my-3">
+            Tollywood Action{" "}
+            <b className="ml-2 text-red-500 text-lg">&times;</b>
+          </span>
+          <span className="bg-[#90909067] px-5 py-2 rounded-3xl cursor-pointer mx-3 md:my-0 my-3">
+            Telugu Drama <b className="ml-2 text-red-500 text-lg">&times;</b>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
